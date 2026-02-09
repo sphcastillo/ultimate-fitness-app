@@ -10,27 +10,32 @@
     "deploy": "npx expo export -p web && npx eas-cli@latest deploy"
   },
   "dependencies": {
-    "expo": "^53.0.4",
-    "expo-constants": "~17.1.4",
-    "expo-linking": "~7.1.4",
-    "expo-router": "~5.1.0",
-    "expo-splash-screen": "~0.30.7",
-    "expo-status-bar": "~2.2.3",
+    "@clerk/clerk-expo": "^2.19.22",
+    "@expo/metro-runtime": "^6.1.2",
+    "@expo/vector-icons": "^15.0.3",
+    "expo": "~54.0.33",
+    "expo-constants": "~18.0.13",
+    "expo-linking": "~8.0.11",
+    "expo-router": "~6.0.23",
+    "expo-splash-screen": "~31.0.13",
+    "expo-status-bar": "~3.0.9",
     "nativewind": "^4.0.1",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "react-native": "0.79.4",
-    "react-native-reanimated": "~3.17.4",
-    "react-native-safe-area-context": "5.4.0",
-    "react-native-screens": "~4.11.1",
-    "react-native-web": "^0.20.0",
-    "tailwindcss": "^3.4.0",
-    "@expo/vector-icons": "^14.1.0"
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-css-interop": "^0.2.1",
+    "react-native-reanimated": "~4.1.1",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-screens": "~4.16.0",
+    "react-native-web": "^0.21.0",
+    "react-native-worklets": "^0.5.1",
+    "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@types/react": "~19.0.10",
-    "typescript": "~5.8.3"
+    "@types/react": "~19.1.17",
+    "typescript": "~5.9.3"
   },
-  "private": true
+  "private": true,
+  "packageManager": "pnpm@10.29.2+sha512.bef43fa759d91fd2da4b319a5a0d13ef7a45bb985a3d7342058470f9d2051a3ba8674e629672654686ef9443ad13a82da2beb9eeb3e0221c87b8154fff9d74b8"
 }
