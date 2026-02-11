@@ -51,17 +51,85 @@ export default function SignUp() {
 
     if (pendingVerification) {
         return (
-            <>
-                <Text>Verify your Email</Text>
-                <TextInput
-                    placeholder='Enter your verification code'
-                    value={code}
-                    onChangeText={(code) => setCode(code)}
-                />
-                <TouchableOpacity onPress={onVerifyPress}>
-                    <Text>Verify</Text>
-                </TouchableOpacity>
-            </>
+            <SafeAreaView className='flex-1 bg-gray-50'>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    className='flex-1'
+                >
+                    <View className='flex-1 px-6'>
+                        <View className='flex-1 justify-center'>
+                            <View className='items-center mb-8'>
+                                <View className='w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl items-center justify-center mb-4 shadow-lg'>
+                                    <Ionicons name='mail' size={40} color='white' />
+                                </View>
+                                <Text className='text-3xl font-bold text-gray-900 mb-2'>
+                                    Check Your Email
+                                </Text>
+                                <Text className='text-lg text-gray-600 text-center'>
+                                    We've sent a verification code to{'\n'}{emailAddress}
+                                </Text>
+                            </View>
+
+                            <View className='bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6'>
+                                <Text className='text-2xl font-bold text-gray-900 mb-6 text-center'>
+                                    Enter Verification Code
+                                </Text>
+                                <View className='mb-6'>
+                                    <Text className='text-sm font-medium text-gray-700 mb-2'>
+                                        Verification Code
+                                    </Text>
+                                    <View className='flex-row items-center bg-gray-50 rounded-xl px-4 py-4 border border-gray-200'>
+                                        <Ionicons name='key-outline' size={20} color='#6b7280' />
+                                        <TextInput
+                                            placeholder='Enter 6-digit code'
+                                            value={code}
+                                            placeholderTextColor="#9CA3AF"
+                                            onChangeText={setCode}
+                                            className='flex-1 ml-3 text-gray-900 text-center text-lg tracking-widest'
+                                            editable={!isLoading}
+                                            keyboardType='number-pad'
+                                            maxLength={6}
+                                        />
+                                    </View>
+                                </View>
+
+                                <TouchableOpacity
+                                onPress={onVerifyPress}
+                                disabled={isLoading}
+                                activeOpacity={0.8}
+                                className={`rounded-xl py-4 shadow-sm mb-4 ${isLoading ? 'bg-gray-400' : 'bg-green-600'}`}
+                                >
+                                    <View className='flex-row items-center justify-center'>
+                                        {isLoading ? (
+                                            <Ionicons name='refresh' size={20} color='white' />
+                                        ) : (
+                                            <Ionicons name='checkmark-circle-outline' size={20} color='white' />
+                                        )}
+                                        <Text className='text-white font-semibold text-lg ml-2'>
+                                            {isLoading ? 'Verifying...' : 'Verify Email'}
+                                        </Text>
+                                    </View>
+                                
+                                </TouchableOpacity>
+
+                                <TouchableOpacity className='py-2'>
+                                    <Text className='text-blue-600 font-medium text-center'>
+                                        Didn't receive the code? Resend
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
+                        <View className='pb-6'>
+                            <Text className='text-gray-500 text-center text-sm'>
+                                Almost there! Just one more step.
+                            </Text>
+                        </View>
+                    </View>
+
+
+                </KeyboardAvoidingView>
+            </SafeAreaView>
         )
     }
 
