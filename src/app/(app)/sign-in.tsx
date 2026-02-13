@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { useSignIn } from '@clerk/clerk-expo';
 import { Link, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -17,6 +17,13 @@ export default function SignIn() {
   const onSignInPress = async () => {
     if (!isLoaded) return;
 
+    if(!emailAddress || !password) {
+      Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+
+    setIsLoading(true);
+
     try {
       const signInAttempt = await signIn.create({
         identifier: emailAddress,
@@ -28,18 +35,20 @@ export default function SignIn() {
         router.replace('/');
       } else {
         console.error(JSON.stringify(signInAttempt, null, 2));
+        Alert.alert("Error", "Sign in failed. Please try again.");
       }
     } catch (error) {
       console.error(JSON.stringify(error, null, 2));
+      Alert.alert("Error", error?.errors?.[0]?.message || "Sign in failed. Please try again.");
+    } finally{
+      setIsLoading(false);
     }
-
-
   }
 
 
 
   return (
-    <SafeAreaView className='flex-1'>
+    <SafeAreaView className='flex-1 bg-gray-50'>
       <KeyboardAvoidingView className='flex-1' behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View className='flex-1 px-6'>
           <View className='flex-1 justify-center'>

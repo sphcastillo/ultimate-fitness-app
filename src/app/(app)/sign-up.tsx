@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSignUp } from '@clerk/clerk-expo';
 import { Link, useRouter } from 'expo-router';
@@ -17,7 +17,12 @@ export default function SignUp() {
     const onSignUpPress = async () => {
         if (!isLoaded) return;
 
-        console.log(emailAddress, password);
+        if(!emailAddress || !password) {
+            Alert.alert('Error', 'Please fill in all fields');
+            return;
+        }
+
+        setIsLoading(true);
 
         try {
             await signUp.create({ emailAddress, password });
@@ -28,11 +33,21 @@ export default function SignUp() {
 
         } catch (error) {
             console.error(JSON.stringify(error, null, 2));
+            Alert.alert("Error", error?.errors?.[0]?.message || "Sign up failed. Please try again.");
+        } finally{
+            setIsLoading(false);
         }
     };
 
     const onVerifyPress = async () => {
         if (!isLoaded) return;
+
+        if(!code) {
+            Alert.alert('Error', 'Please enter the verification code');
+            return;
+        }
+
+        setIsLoading(true);
 
         try {
             const signUpAttempt = await signUp.attemptEmailAddressVerification({ code });
@@ -42,10 +57,14 @@ export default function SignUp() {
                 router.replace('/');
             } else {
                 console.error(JSON.stringify(signUpAttempt, null, 2));
+                Alert.alert("Error", "Verification failed. Please try again.");
             }
 
         } catch (error) {
             console.error(JSON.stringify(error, null, 2));
+            Alert.alert("Error", error?.errors?.[0]?.message || "Verification failed. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
     }
 
