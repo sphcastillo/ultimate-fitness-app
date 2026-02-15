@@ -58,6 +58,16 @@ export type Exercise = {
   _rev: string;
   name?: string;
   description?: string;
+  workoutType?:
+    | "bodyweight"
+    | "cableMachines"
+    | "cardio"
+    | "bench"
+    | "barbell"
+    | "kettlebells"
+    | "trx"
+    | "dumbbells"
+    | "other";
   difficulty?: "beginner" | "intermediate" | "advanced";
   targets?: Array<string>;
   whatsToLove?: Array<string>;
@@ -224,6 +234,16 @@ export type ExercisesQueryResult = Array<{
   _rev: string;
   name?: string;
   description?: string;
+  workoutType?:
+    | "bodyweight"
+    | "cableMachines"
+    | "cardio"
+    | "bench"
+    | "barbell"
+    | "kettlebells"
+    | "trx"
+    | "dumbbells"
+    | "other";
   difficulty?: "advanced" | "beginner" | "intermediate";
   targets?: Array<string>;
   whatsToLove?: Array<string>;

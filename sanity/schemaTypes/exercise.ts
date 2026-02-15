@@ -26,9 +26,29 @@ export const exercise = defineType({
       rows: 4,
     }),
     defineField({
+      name: 'workoutType',
+      title: 'Workout Type',
+      description: 'What kind of workout/equipment this exercise uses.',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Bodyweight', value: 'bodyweight'},
+          {title: 'Cable machines', value: 'cableMachines'},
+          {title: 'Cardio', value: 'cardio'},
+          {title: 'Bench', value: 'bench'},
+          {title: 'Barbell', value: 'barbell'},
+          {title: 'Kettlebells', value: 'kettlebells'},
+          {title: 'TRX', value: 'trx'},
+          {title: 'Dumbbells', value: 'dumbbells'},
+          {title: 'Other', value: 'other'},
+        ],
+      },
+      initialValue: 'other',
+    }),
+    defineField({
       name: 'difficulty',
-      title: 'Difficulty (Deprecated)',
-      description: 'Deprecated field. Use targets/instructions and other metadata instead.',
+      title: 'Difficulty',
+      description: 'How challenging the exercise is for most people.',
       type: 'string',
       options: {
         list: [
@@ -38,21 +58,36 @@ export const exercise = defineType({
         ],
         layout: 'radio',
       },
-      deprecated: {
-        reason: 'Difficulty is no longer used. This field will be removed after existing data is migrated.',
-      },
-      readOnly: true,
-      hidden: ({value}) => value === undefined,
-      initialValue: undefined,
+      validation: (rule) => rule.required(),
+      initialValue: 'beginner',
     }),
     defineField({
       name: 'targets',
       title: 'Targets',
       description:
-        'What this exercise targets (for example: "Chest", "Quads"). Add one or add multiple.',
+        'What this exercise targets. Select one or select multiple.',
       type: 'array',
       of: [{type: 'string'}],
-      options: {layout: 'tags'},
+      options: {
+        list: [
+          {title: 'Chest', value: 'Chest'},
+          {title: 'Triceps', value: 'Triceps'},
+          {title: 'Forearms', value: 'Forearms'},
+          {title: 'Biceps', value: 'Biceps'},
+          {title: 'Glutes', value: 'Glutes'},
+          {title: 'Hamstrings', value: 'Hamstrings'},
+          {title: 'Core', value: 'Core'},
+          {title: 'Lats', value: 'Lats'},
+          {title: 'Back', value: 'Back'},
+          {title: 'Lower Body', value: 'Lower Body'},
+          {title: 'Upper Body', value: 'Upper Body'},
+          {title: 'Shoulders', value: 'Shoulders'},
+          {title: 'Lower Back', value: 'Lower Back'},
+          {title: 'Other', value: 'Other'},
+        ],
+        // Renders as a selectable checklist/grid (no free-typing)
+        layout: 'grid',
+      },
       validation: (rule) => rule.unique(),
     }),
     defineField({
@@ -125,11 +160,26 @@ export const exercise = defineType({
       title: 'name',
       media: 'image',
       isActive: 'isActive',
+      workoutType: 'workoutType',
     },
-    prepare({title, isActive, media}) {
+    prepare({title, isActive, media, workoutType}) {
+      const workoutTypeLabels: Record<string, string> = {
+        bodyweight: 'Bodyweight',
+        cableMachines: 'Cable machines',
+        cardio: 'Cardio',
+        bench: 'Bench',
+        barbell: 'Barbell',
+        kettlebells: 'Kettlebells',
+        trx: 'TRX',
+        dumbbells: 'Dumbbells',
+        other: 'Other',
+      }
+
       return {
         title,
-        subtitle: isActive === false ? 'Inactive' : 'Active',
+        subtitle:
+          (isActive === false ? 'Inactive' : 'Active') +
+          (workoutType ? ` • ${workoutTypeLabels[workoutType] ?? workoutType}` : ''),
         media,
       }
     },

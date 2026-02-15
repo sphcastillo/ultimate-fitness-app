@@ -265,6 +265,51 @@
         },
         "optional": true
       },
+      "workoutType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "bodyweight"
+            },
+            {
+              "type": "string",
+              "value": "cableMachines"
+            },
+            {
+              "type": "string",
+              "value": "cardio"
+            },
+            {
+              "type": "string",
+              "value": "bench"
+            },
+            {
+              "type": "string",
+              "value": "barbell"
+            },
+            {
+              "type": "string",
+              "value": "kettlebells"
+            },
+            {
+              "type": "string",
+              "value": "trx"
+            },
+            {
+              "type": "string",
+              "value": "dumbbells"
+            },
+            {
+              "type": "string",
+              "value": "other"
+            }
+          ]
+        },
+        "optional": true
+      },
       "difficulty": {
         "type": "objectAttribute",
         "value": {

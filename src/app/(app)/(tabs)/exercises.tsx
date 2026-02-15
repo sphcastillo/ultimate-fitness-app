@@ -1,7 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, FlatList, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import ExerciseCard from '@/components/ExerciseCard';
 import { client } from '@/lib/sanity/client';
@@ -33,11 +33,22 @@ export default function Exercises() {
     }
   }
 
+  useEffect(() => {
+    fetchExercises();
+  }, []);
+
   const onRefresh = async () => {
     setRefreshing(true);
     await fetchExercises();
     setRefreshing(false);
   }
+
+  useEffect(() => {
+    const filtered = exercises.filter((exercise: any) =>
+      exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredExercises(filtered);
+  }, [searchQuery, exercises]);
 
   return (
     <SafeAreaView className='flex-1 bg-gray-50'>
